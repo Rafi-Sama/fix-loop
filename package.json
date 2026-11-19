@@ -1,0 +1,23 @@
+{
+  "name": "fixloop",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "check": "node scripts/check.mjs",
+    "check:fast": "node scripts/check.mjs --fast",
+    "seed": "node scripts/seed.mjs",
+    "seed:reset": "node scripts/seed.mjs --reset",
+    "links": "node scripts/links.mjs",
+    "superadmin": "npm --prefix server run -s superadmin --",
+    "lint": "biome lint web/src scripts server/src server/test",
+    "lint:fix": "biome lint --write web/src scripts server/src server/test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6"
+  }
+}

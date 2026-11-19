@@ -1,0 +1,28 @@
+# Local dev + test infrastructure. Ports avoid the defaults (5432/9000) used by other local projects.
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: owner
+      POSTGRES_PASSWORD: owner
+      POSTGRES_DB: fixloop
+    ports: ["5433:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U owner -d fixloop"]
+      interval: 2s
+      retries: 20
+  minio:
+    # Pinned by digest (RELEASE.2025-09-07T16-13-09Z): MinIO no longer publishes release tags on Docker Hub.
+    image: minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio-secret
+    ports: ["9100:9000", "9101:9001"]
+    volumes: [miniodata:/data]
+volumes:
+  pgdata:
+  miniodata:

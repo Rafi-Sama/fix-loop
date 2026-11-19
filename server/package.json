@@ -1,0 +1,54 @@
+{
+  "name": "fixloop-server",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "worker": "tsx --env-file=.env src/worker.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -r src/db/migrations dist/db/",
+    "start": "node dist/server.js",
+    "start:worker": "node dist/worker.js",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx --env-file=.env src/db/migrate.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start:migrate": "node dist/db/migrate.js",
+    "superadmin": "tsx --env-file=.env src/cli/superadmin.ts",
+    "start:superadmin": "node dist/cli/superadmin.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1164.0",
+    "@aws-sdk/s3-presigned-post": "^3.1164.0",
+    "@aws-sdk/s3-request-presigner": "^3.1164.0",
+    "@fastify/cookie": "^11.1.5",
+    "@fastify/cors": "^11.4.1",
+    "@fastify/helmet": "^13.2.0",
+    "@fastify/rate-limit": "^11.2.2",
+    "@node-rs/argon2": "^2.2.2",
+    "drizzle-orm": "^0.45.4",
+    "fastify": "^5.12.8",
+    "fastify-plugin": "^6.0.1",
+    "fastify-type-provider-zod": "^7.0.0",
+    "pino": "^10.4.0",
+    "postgres": "^4.1.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "drizzle-kit": "^0.31.11",
+    "pino-pretty": "^13.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}

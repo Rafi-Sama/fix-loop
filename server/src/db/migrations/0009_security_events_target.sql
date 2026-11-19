@@ -1,0 +1,1 @@
+CREATE INDEX "security_events_target_idx" ON "security_events" USING btree (("detail"->>'targetUserId')) WHERE ("security_events"."detail"->>'targetUserId') is not null;
